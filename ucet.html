@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Můj účet | NARKY.cz</title>
+<meta name="description" content="Zákaznický účet NARKY.cz, objednávky a oblíbené produkty."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+<link rel="stylesheet" href="css/narky-upgrade.css"/>
+<link rel="manifest" href="manifest.json"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.5/purify.min.js"></script>
+</head>
+<body>
+<header id="shop-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo-link"><div class="logo-fallback" style="display:flex"><span class="logo-text">NARKY</span><span class="logo-sub">.cz</span></div></a>
+    <div class="header-search"><i class="fas fa-search search-icon"></i><input type="text" id="globalSearch" placeholder="Hledat produkt, značku..." autocomplete="off"/><div id="searchDropdown" class="search-dropdown"></div></div>
+    <div class="header-actions">
+      <a href="tel:+420602449189" class="hdr-action phone-btn"><i class="fas fa-phone-alt"></i><span>602 449 189</span></a>
+      <button id="cartBtn" class="hdr-action cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cartBadge">0</span></button>
+    </div>
+  </div>
+</header>
+<main class="container account-page" id="accountApp"></main>
+<script src="js/db.js"></script>
+<script src="js/narky-ui.js"></script>
+<script src="js/narky-business.js"></script>
+</body>
+</html>

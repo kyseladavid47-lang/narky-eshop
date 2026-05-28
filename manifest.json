@@ -1,0 +1,17 @@
+{
+  "name": "NARKY.cz - Nářadí a zahradní technika",
+  "short_name": "NARKY",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#eef3f8",
+  "theme_color": "#0b74d1",
+  "description": "E-shop s nářadím, zahradní technikou a servisem v Ostřetíně.",
+  "icons": [
+    {
+      "src": "assets/narky-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

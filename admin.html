@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin – NARKY.cz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>/* ═══════════════════════════════════════════════════════════
+   NARKY E-SHOP — SHOP.CSS
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --primary: #e85d04;
+  --primary-dark: #c44b00;
+  --primary-light: #fff3ed;
+  --accent: #2d6a4f;
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface2: #f1f3f6;
+  --border: #e3e7ef;
+  --text: #1a1c23;
+  --text2: #5a6072;
+  --text3: #8a93a8;
+  --header-h: 116px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(0,0,0,.08);
+  --shadow-md: 0 6px 32px rgba(0,0,0,.12);
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --transition: .2s ease;
+}
+
+body.dark-mode {
+  --bg: #12141a;
+  --surface: #1e2028;
+  --surface2: #272a35;
+  --border: #2e3245;
+  --text: #f0f2f8;
+  --text2: #9da5be;
+  --text3: #5e6580;
+  --primary-light: #2a1a0a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+/* ── UTILS ─────────────────────────────────────────────── */
+.container { max-width: 1340px; margin: 0 auto; padding: 0 20px; }
+.btn-primary { background: var(--primary); color: #fff; border-radius: var(--radius-sm); padding: 10px 20px; font-family: var(--font-head); font-weight: 700; font-size: .9rem; transition: background var(--transition), transform var(--transition); display: inline-flex; align-items: center; gap: 7px; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.btn-ghost { border: 1.5px solid var(--border); color: var(--text2); border-radius: var(--radius-sm); padding: 10px 18px; font-family: var(--font-head); font-weight: 600; font-size: .9rem; transition: all var(--transition); }
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ── HEADER ─────────────────────────────────────────────── */
+#shop-header { position: sticky; top: 0; z-index: 200; background: var(--surface); border-bottom: 1px solid var(--border); }
+.header-inner { display: flex; align-items: center; gap: 16px; padding: 12px 20px; max-width: 1340px; margin: 0 auto; }
+.logo-link { flex-shrink: 0; display: flex; align-items: center; }
+.header-logo { height: 44px; width: auto; object-fit: contain; }
+.logo-fallback { display: flex; align-items: baseline; gap: 2px; }
+.logo-text { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+.logo-sub { font-family: var(--font-head); font-size: .9rem; font-weight: 600; color: var(--text2); }
+.header-search { flex: 1; position: relative; max-width: 600px; }
+.header-search input { width: 100%; padding: 10px 16px 10px 42px; border: 1.5px solid var(--border); border-radius: 50px; font-family: var(--font-body); font-size: .95rem; background: var(--bg); color: var(--text); transition: border-color var(--transition); }
+.header-search input:focus { outline: none; border-color: var(--primary); }
+.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text3); pointer-events: none; }
+.search-dropdown { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); z-index: 300; max-height: 380px; overflow-y: auto; display: none; }
+.search-dropdown.open { display: block; }
+.search-result-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; cursor: pointer; transition: background var(--transition); }
+.search-result-item:hover { background: var(--bg); }
+.search-result-item img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; }
+.search-result-info { flex: 1; }
+.search-result-name { font-size: .88rem; font-weight: 600; color: var(--text); }
+.search-result-price { font-size: .85rem; color: var(--primary); font-weight: 700; }
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.hdr-action { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 50px; font-size: .88rem; font-weight: 600; transition: all var(--transition); }
+.phone-btn { background: var(--primary-light); color: var(--primary); }
+.phone-btn:hover { background: var(--primary); color: #fff; }
+.icon-btn { color: var(--text2); padding: 8px 10px; }
+.icon-btn:hover { color: var(--text); background: var(--surface2); }
+.cart-btn { background: var(--primary); color: #fff; font-size: 1rem; position: relative; padding: 8px 16px; }
+.cart-btn:hover { background: var(--primary-dark); }
+.cart-badge { position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff; border-radius: 50%; width: 20px; height: 20px; font-size: .7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface); }
+.mobile-menu-btn { display: none; padding: 8px; color: var(--text2); font-size: 1.2rem; }
+
+/* ── CAT NAV ─────────────────────────────────────────────── */
+.cat-nav { border-top: 1px solid var(--border); background: var(--surface); overflow-x: auto; scrollbar-width: none; }
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-nav-inner { display: flex; align-items: center; gap: 4px; padding: 0 20px; max-width: 1340px; margin: 0 auto; }
+.cat-nav-item { display: flex; align-items: center; gap: 7px; padding: 10px 14px; font-size: .85rem; font-weight: 600; color: var(--text2); border-bottom: 3px solid transparent; white-space: nowrap; transition: all var(--transition); cursor: pointer; }
+.cat-nav-item:hover, .cat-nav-item.active { color: var(--primary); border-bottom-color: var(--primary); }
+.cat-nav-item i { font-size: .8rem; }
+
+/* ── BREADCRUMB ─────────────────────────────────────────── */
+.breadcrumb-bar { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 8px 0; font-size: .82rem; color: var(--text3); }
+.breadcrumb-bar a { color: var(--text2); }
+.breadcrumb-bar a:hover { color: var(--primary); }
+.breadcrumb-bar i { font-size: .65rem; margin: 0 6px; }
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.shop-layout { display: grid; grid-template-columns: 240px 1fr; gap: 28px; padding-top: 24px; padding-bottom: 48px; align-items: start; }
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+.sidebar-sticky { position: sticky; top: calc(var(--header-h) + 16px); }
+.filter-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--border); }
+.filter-header h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.filter-reset { font-size: .78rem; color: var(--text3); text-decoration: underline; }
+.filter-reset:hover { color: var(--primary); }
+.filter-group { border-bottom: 1px solid var(--border); }
+.filter-group:last-child { border-bottom: none; }
+.filter-group-title { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; font-size: .85rem; font-weight: 700; cursor: pointer; user-select: none; transition: color var(--transition); }
+.filter-group-title:hover { color: var(--primary); }
+.filter-group-title i { font-size: .75rem; transition: transform .2s; }
+.filter-group-title.collapsed i { transform: rotate(-90deg); }
+.filter-group-body { padding: 4px 18px 14px; display: flex; flex-direction: column; gap: 6px; }
+.filter-group-body.hidden { display: none; }
+.filter-check { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--text2); cursor: pointer; padding: 3px 0; }
+.filter-check input { accent-color: var(--primary); width: 15px; height: 15px; }
+.filter-check:hover { color: var(--text); }
+.fcount { margin-left: auto; color: var(--text3); font-size: .75rem; }
+.price-inputs { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: .82rem; }
+.price-inputs input { width: 70px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: .82rem; background: var(--bg); color: var(--text); }
+.btn-apply-price { width: 100%; padding: 7px; background: var(--primary-light); color: var(--primary); border-radius: 6px; font-size: .82rem; font-weight: 700; transition: all var(--transition); }
+.btn-apply-price:hover { background: var(--primary); color: #fff; }
+
+/* ── TOOLBAR ─────────────────────────────────────────────── */
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+.toolbar-left { display: flex; align-items: center; gap: 12px; }
+.result-count { font-size: .88rem; color: var(--text2); }
+.filter-mobile-btn { display: none; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 50px; font-size: .85rem; font-weight: 600; color: var(--text2); }
+.toolbar-right { display: flex; align-items: center; gap: 10px; }
+.sort-select-wrap { display: flex; align-items: center; gap: 7px; color: var(--text2); font-size: .85rem; }
+.sort-select-wrap select { padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font-family: var(--font-body); font-size: .85rem; cursor: pointer; }
+.view-toggle { display: flex; gap: 4px; }
+.view-btn { padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text3); font-size: .9rem; transition: all var(--transition); }
+.view-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ── ACTIVE FILTERS ─────────────────────────────────────── */
+.active-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.filter-tag { display: flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--primary-light); color: var(--primary); border-radius: 50px; font-size: .8rem; font-weight: 600; }
+.filter-tag button { display: flex; align-items: center; color: var(--primary); font-size: .75rem; }
+
+/* ── PRODUCT GRID ───────────────────────────────────────── */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+.product-grid.list-mode { grid-template-columns: 1fr; }
+
+/* ── PRODUCT CARD ───────────────────────────────────────── */
+.product-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow var(--transition), transform var(--transition); cursor: pointer; }
+.product-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.product-card.list-card { flex-direction: row; align-items: center; gap: 0; }
+.card-img-wrap { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--bg); }
+.list-card .card-img-wrap { width: 160px; flex-shrink: 0; aspect-ratio: unset; height: 140px; }
+.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.product-card:hover .card-img-wrap img { transform: scale(1.04); }
+.card-badges { position: absolute; top: 8px; left: 8px; display: flex; flex-direction: column; gap: 4px; }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: .7rem; font-weight: 700; font-family: var(--font-head); }
+.badge-sale { background: #e55; color: #fff; }
+.badge-bestseller { background: #e85d04; color: #fff; }
+.badge-new { background: #2d6a4f; color: #fff; }
+.badge-out { background: var(--surface2); color: var(--text3); }
+.card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+.card-brand { font-size: .72rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.card-name { font-family: var(--font-head); font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 8px; flex: 1; }
+.card-stock { font-size: .75rem; font-weight: 600; margin-bottom: 10px; }
+.stock-in { color: #2d6a4f; } .stock-out { color: #999; } .stock-soon { color: #e89020; }
+.card-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.card-price { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--primary); }
+.card-price-old { font-size: .82rem; color: var(--text3); text-decoration: line-through; }
+.card-price-save { font-size: .75rem; background: #fde; color: #c44; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+.card-add-btn { width: 100%; padding: 9px; background: var(--primary); color: #fff; border-radius: var(--radius-sm); font-family: var(--font-head); font-weight: 700; font-size: .85rem; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all var(--transition); }
+.card-add-btn:hover { background: var(--primary-dark); }
+.card-add-btn.disabled { background: var(--surface2); color: var(--text3); cursor: default; }
+.card-add-btn:not(.disabled):active { transform: scale(.97); }
+
+/* List mode card overrides */
+.list-card .card-body { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 16px; }
+.list-card .card-name { font-size: 1rem; margin-bottom: 0; min-width: 200px; }
+.list-card .card-price-row { margin-bottom: 0; }
+.list-card .card-add-btn { width: auto; padding: 9px 20px; }
+.list-card .card-stock { margin-bottom: 0; }
+
+/* ── PAGINATION ─────────────────────────────────────────── */
+.pagination { display: flex; justify-content: center; gap: 6px; margin-top: 32px; flex-wrap: wrap; }
+.page-btn { width: 38px; height: 38px; border-radius: var(--radius-sm); border: 1px solid var(--border); font-size: .88rem; font-weight: 600; color: var(--text2); display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
+.page-btn:hover, .page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ── CART DRAWER ────────────────────────────────────────── */
+.cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 390; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 400px; max-width: 100vw; background: var(--surface); z-index: 400; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .3s cubic-bezier(.22,1,.36,1); box-shadow: -8px 0 40px rgba(0,0,0,.16); }
+.cart-drawer.open { transform: translateX(0); }
+.cart-drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.cart-drawer-header h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.cart-drawer-close { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text2); transition: all var(--transition); }
+.cart-drawer-close:hover { background: var(--surface2); color: var(--text); }
+.cart-drawer-body { flex: 1; overflow-y: auto; padding: 16px 24px; }
+.cart-empty { text-align: center; padding: 60px 20px; color: var(--text3); }
+.cart-empty i { font-size: 3rem; margin-bottom: 16px; opacity: .4; display: block; }
+.cart-empty p { margin-bottom: 20px; }
+.cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.cart-item:last-child { border-bottom: none; }
+.cart-item-img { width: 70px; height: 70px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: .85rem; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+.cart-item-price { font-size: .9rem; font-weight: 800; color: var(--primary); font-family: var(--font-head); }
+.cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .9rem; color: var(--text2); transition: all var(--transition); }
+.qty-btn:hover { border-color: var(--primary); color: var(--primary); }
+.qty-val { font-size: .9rem; font-weight: 700; min-width: 24px; text-align: center; }
+.cart-item-del { margin-left: auto; color: var(--text3); font-size: .9rem; transition: color var(--transition); }
+.cart-item-del:hover { color: #e55; }
+.cart-drawer-footer { padding: 20px 24px; border-top: 1px solid var(--border); }
+.cart-total-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: .88rem; color: var(--text2); }
+.cart-total-row.main { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 16px; }
+.cart-checkout-btn { width: 100%; padding: 14px; background: var(--primary); color: #fff; border-radius: var(--radius); font-family: var(--font-head); font-size: 1rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all var(--transition); margin-bottom: 10px; }
+.cart-checkout-btn:hover { background: var(--primary-dark); }
+.cart-continue-btn { width: 100%; padding: 10px; color: var(--text2); font-size: .88rem; text-align: center; transition: color var(--transition); }
+.cart-continue-btn:hover { color: var(--primary); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.shop-footer { background: var(--text); color: #a0abbe; margin-top: 60px; }
+.shop-footer .footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding: 48px 20px; }
+.footer-brand img { height: 40px; margin-bottom: 12px; filter: brightness(10); }
+.footer-brand p { font-size: .85rem; line-height: 1.6; color: #7a88a8; }
+.shop-footer h5 { font-family: var(--font-head); color: #fff; font-size: .9rem; font-weight: 700; margin-bottom: 14px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col ul a, .footer-col ul span { font-size: .85rem; color: #7a88a8; display: flex; align-items: center; gap: 8px; transition: color var(--transition); }
+.footer-col ul a:hover { color: var(--primary); }
+.footer-bottom { border-top: 1px solid #2a3050; padding: 16px 0; text-align: center; font-size: .8rem; color: #5a6580; }
+.carrier-logos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.carrier-badge { padding: 4px 8px; background: #2a3050; color: #a0abbe; border-radius: 4px; font-size: .75rem; font-weight: 600; }
+.payment-icons { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; color: #7a88a8; }
+.pay-label { font-size: .78rem; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .shop-layout { grid-template-columns: 200px 1fr; }
+  .shop-footer .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .shop-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; position: fixed; left: 0; top: 0; bottom: 0; z-index: 350; border-radius: 0; width: 280px; overflow-y: auto; }
+  .sidebar.mobile-open { display: flex; flex-direction: column; }
+  .filter-mobile-btn { display: flex; }
+  .phone-btn span { display: none; }
+  .header-search { max-width: none; }
+  .shop-footer .footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .cart-drawer { width: 100vw; }
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+}
+@media (max-width: 480px) {
+  .shop-footer .footer-inner { grid-template-columns: 1fr; }
+  .product-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NARKY — ADMIN.CSS
+   ═══════════════════════════════════════════════════════════ */
+.admin-body { min-height: 100vh; background: #0f1117; }
+
+.admin-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#0f1117 0%, #1e2340 100%); padding: 20px; }
+.login-card { background: #1e2028; border: 1px solid #2e3245; border-radius: 20px; padding: 48px; max-width: 400px; width: 100%; text-align: center; }
+.login-logo { height: 48px; margin-bottom: 20px; }
+.login-logo-fallback .logo-text { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--primary); }
+.login-card h2 { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.login-card p { color: #7a88a8; font-size: .9rem; margin-bottom: 28px; }
+.login-form { display: flex; flex-direction: column; gap: 12px; }
+.input-wrap { position: relative; }
+.input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #5a6580; }
+.input-wrap input { width: 100%; padding: 12px 14px 12px 40px; background: #12141a; border: 1.5px solid #2e3245; border-radius: 10px; color: #f0f2f8; font-family: var(--font-body); font-size: .95rem; }
+.input-wrap input:focus { outline: none; border-color: var(--primary); }
+.btn-primary.btn-full { width: 100%; padding: 13px; justify-content: center; font-size: 1rem; border-radius: 10px; }
+.login-hint { font-size: .8rem; color: #e55; min-height: 20px; margin-top: 4px; }
+.demo-note { margin-top: 20px; font-size: .8rem; color: #5a6580; }
+.demo-note strong { color: #a0abbe; }
+
+/* PANEL */
+.admin-panel { display: flex; min-height: 100vh; }
+.admin-nav { width: 240px; flex-shrink: 0; background: #1e2028; border-right: 1px solid #2e3245; display: flex; flex-direction: column; padding: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.admin-logo { display: flex; align-items: center; gap: 10px; padding: 20px 20px 16px; border-bottom: 1px solid #2e3245; }
+.admin-logo img { height: 32px; filter: brightness(10); }
+.admin-logo span { font-family: var(--font-head); font-size: .95rem; font-weight: 800; color: #fff; }
+.admin-nav ul { list-style: none; padding: 10px 0; flex: 1; }
+.admin-nav ul li { padding: 0 10px; margin-bottom: 2px; }
+.nav-item { width: 100%; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; color: #7a88a8; font-size: .88rem; font-weight: 600; transition: all .15s; cursor: pointer; text-decoration: none; }
+.nav-item:hover { background: #272a35; color: #f0f2f8; }
+.nav-item.active { background: rgba(232,93,4,.12); color: var(--primary); }
+.nav-item i { width: 18px; text-align: center; }
+.nav-badge { margin-left: auto; background: var(--primary); color: #fff; border-radius: 50px; padding: 2px 7px; font-size: .7rem; font-weight: 800; }
+.admin-nav-footer { padding: 12px 10px; border-top: 1px solid #2e3245; display: flex; flex-direction: column; gap: 2px; }
+
+.admin-content { flex: 1; padding: 32px; overflow-x: auto; background: #12141a; }
+.admin-section h1 { font-family: var(--font-head); font-size: 1.7rem; font-weight: 800; color: #f0f2f8; margin-bottom: 24px; }
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.stat-card { background: #1e2028; border: 1px solid #2e3245; border-radius: 14px; padding: 20px; }
+.stat-card-label { font-size: .78rem; font-weight: 600; color: #5a6580; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.stat-card-value { font-family: var(--font-head); font-size: 1.9rem; font-weight: 800; color: #f0f2f8; }
+.stat-card-value.highlight { color: var(--primary); }
+.stat-card-sub { font-size: .78rem; color: #5a6580; margin-top: 4px; }
+
+/* DASH ROW */
+.dash-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.dash-card { background: #1e2028; border: 1px solid #2e3245; border-radius: 14px; padding: 24px; }
+.dash-card h3 { font-family: var(--font-head); font-size: .95rem; font-weight: 700; color: #a0abbe; margin-bottom: 16px; }
+.dash-order-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #272a35; font-size: .85rem; color: #a0abbe; }
+.dash-order-row:last-child { border-bottom: none; }
+.dash-order-id { font-weight: 700; color: #f0f2f8; }
+.dash-order-price { color: var(--primary); font-weight: 800; font-family: var(--font-head); }
+.low-stock-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #272a35; font-size: .85rem; }
+.low-stock-row:last-child { border-bottom: none; }
+.low-stock-name { color: #f0f2f8; }
+.low-stock-qty { font-weight: 800; }
+.low-stock-qty.danger { color: #e55; }
+.low-stock-qty.warn { color: #e89020; }
+
+/* ORDERS TABLE */
+.section-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+.filter-bar input, .filter-bar select { padding: 8px 12px; background: #1e2028; border: 1px solid #2e3245; border-radius: 8px; color: #f0f2f8; font-family: var(--font-body); font-size: .85rem; }
+.orders-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #2e3245; }
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table thead { background: #1e2028; }
+.admin-table th { padding: 12px 16px; text-align: left; font-size: .78rem; font-weight: 700; color: #5a6580; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+.admin-table td { padding: 12px 16px; font-size: .85rem; color: #a0abbe; border-bottom: 1px solid #1a1e28; white-space: nowrap; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tbody tr:hover { background: #1e2028; }
+.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 50px; font-size: .73rem; font-weight: 700; }
+.status-nova { background: rgba(73,140,200,.12); color: #6aaddd; }
+.status-zpracovava { background: rgba(232,93,4,.12); color: var(--primary); }
+.status-odeslana { background: rgba(73,170,130,.12); color: #5db89a; }
+.status-dokoncena { background: rgba(45,106,79,.12); color: #4fa87a; }
+.status-zrusena { background: rgba(229,85,85,.12); color: #e57; }
+.table-action-btn { padding: 5px 10px; border-radius: 6px; font-size: .78rem; font-weight: 700; transition: all .15s; }
+.btn-view { background: rgba(232,93,4,.1); color: var(--primary); }
+.btn-view:hover { background: var(--primary); color: #fff; }
+.status-select { padding: 4px 8px; background: #12141a; border: 1px solid #2e3245; border-radius: 6px; color: #f0f2f8; font-size: .78rem; cursor: pointer; }
+
+/* INVENTORY */
+.inv-table .inv-name { font-weight: 700; color: #f0f2f8; font-size: .9rem; }
+.inv-table .inv-cat { font-size: .78rem; color: #5a6580; text-transform: uppercase; }
+.stock-input { width: 70px; padding: 5px 8px; background: #12141a; border: 1px solid #2e3245; border-radius: 6px; color: #f0f2f8; text-align: center; font-size: .9rem; font-weight: 700; }
+.btn-edit-stock { padding: 5px 12px; background: rgba(232,93,4,.1); color: var(--primary); border-radius: 6px; font-size: .78rem; font-weight: 700; transition: all .15s; }
+.btn-edit-stock:hover { background: var(--primary); color: #fff; }
+
+/* EMPTY */
+.empty-state { text-align: center; padding: 60px 20px; color: #5a6580; }
+.empty-state i { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-box { background: #1e2028; border: 1px solid #2e3245; border-radius: 16px; max-width: 680px; width: 100%; max-height: 80vh; overflow-y: auto; }
+.modal-box.modal-small { max-width: 440px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #2e3245; }
+.modal-header h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: #f0f2f8; }
+.modal-header button { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #7a88a8; transition: all .15s; }
+.modal-header button:hover { background: #272a35; color: #f0f2f8; }
+.modal-body { padding: 24px; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid #2e3245; display: flex; justify-content: flex-end; gap: 10px; }
+.modal-footer .btn-ghost { padding: 9px 18px; border: 1px solid #2e3245; color: #7a88a8; border-radius: 8px; font-size: .88rem; font-weight: 600; }
+.modal-footer .btn-primary { padding: 9px 18px; border-radius: 8px; font-size: .88rem; }
+
+.order-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.od-section h4 { font-family: var(--font-head); font-size: .85rem; font-weight: 700; color: #5a6580; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+.od-section p { font-size: .88rem; color: #a0abbe; margin-bottom: 4px; }
+.od-section p strong { color: #f0f2f8; }
+.od-items { list-style: none; }
+.od-items li { padding: 8px 0; border-bottom: 1px solid #272a35; font-size: .88rem; color: #a0abbe; display: flex; justify-content: space-between; }
+.od-items li:last-child { border-bottom: none; }
+.od-total-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: .9rem; color: #a0abbe; border-bottom: 1px solid #272a35; }
+.od-total-row.main { color: #f0f2f8; font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; border-bottom: none; }
+.od-total-row.main span:last-child { color: var(--primary); }
+
+/* Stock edit modal */
+.stock-prod-name { font-weight: 700; color: #f0f2f8; font-size: 1rem; margin-bottom: 20px; }
+.stock-edit-form { display: flex; flex-direction: column; gap: 14px; }
+.input-group label { display: block; font-size: .82rem; font-weight: 700; color: #7a88a8; margin-bottom: 6px; }
+.input-group input, .input-group select { width: 100%; padding: 10px 14px; background: #12141a; border: 1.5px solid #2e3245; border-radius: 8px; color: #f0f2f8; font-family: var(--font-body); font-size: .9rem; }
+.input-group input:focus, .input-group select:focus { outline: none; border-color: var(--primary); }
+.stock-quick-btns { display: flex; gap: 8px; }
+.btn-ghost-sm { padding: 7px 12px; border: 1px solid #2e3245; border-radius: 6px; font-size: .8rem; font-weight: 700; color: #a0abbe; transition: all .15s; }
+.btn-ghost-sm:hover { border-color: var(--primary); color: var(--primary); }
+.btn-ghost-sm.red { border-color: #552; color: #c88; }
+.btn-ghost-sm.red:hover { border-color: #e55; color: #e55; }
+</style>
+<link rel="stylesheet" href="css/narky-upgrade.css"/>
+<link rel="icon" href="narky logo pruhledne.png"/>
+
+<meta name="theme-color" content="#0b74d1"/>
+<meta property="og:site_name" content="NARKY.cz"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="NARKY.cz - Nářadí a zahradní technika"/>
+<meta property="og:description" content="E-shop, prodejna a servis nářadí a zahradní techniky v Ostřetíně."/>
+<meta property="og:image" content="assets/narky-icon.svg"/>
+<link rel="manifest" href="manifest.json"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "NARKY.cz",
+  "url": "https://narky.cz/",
+  "telephone": "+420602449189",
+  "email": "narky@narky.cz",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Ostřetín 180",
+    "postalCode": "534 01",
+    "addressLocality": "Holice",
+    "addressCountry": "CZ"
+  },
+  "currenciesAccepted": "CZK",
+  "paymentAccepted": "Cash, Card, Bank transfer"
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.5/purify.min.js"></script>
+</head>
+<body class="admin-body">
+
+<!-- LOGIN SCREEN -->
+<div id="adminLogin" class="admin-login">
+  <div class="login-card">
+    <img src="narky logo pruhledne.png" alt="NARKY" class="login-logo" onerror="this.style.display='none'"/>
+    <div class="login-logo-fallback"><span class="logo-text">NARKY</span><span class="logo-sub">.cz</span></div>
+    <h2>Administrace</h2>
+    <p>Zadejte heslo pro přístup do administrace</p>
+    <div class="login-form">
+      <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="adminPass" placeholder="Heslo" onkeydown="if(event.key==='Enter')Security.checkLogin()"/></div>
+      <button onclick="Security.checkLogin()" class="btn-primary btn-full">Přihlásit se <i class="fas fa-arrow-right"></i></button>
+      <p class="login-hint" id="loginErr"></p>
+    </div>
+    <p class="demo-note">Produkční nasazení vyžaduje serverové ověření účtu.</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-panel" style="display:none">
+  <nav class="admin-nav">
+    <div class="admin-logo">
+      <img src="narky logo pruhledne.png" alt="N" onerror="this.style.display='none'"/>
+      <span>NARKY Admin</span>
+    </div>
+    <ul>
+      <li><button class="nav-item active" onclick="showSection('dashboard')"><i class="fas fa-chart-bar"></i> Dashboard</button></li>
+      <li><button class="nav-item" onclick="showSection('orders')"><i class="fas fa-shopping-bag"></i> Objednávky <span class="nav-badge" id="newOrdersBadge"></span></button></li>
+      <li><button class="nav-item" onclick="showSection('inventory')"><i class="fas fa-boxes"></i> Sklad</button></li>
+      <li><button class="nav-item" onclick="showSection('products')"><i class="fas fa-tags"></i> Produkty</button></li>
+    </ul>
+    <div class="admin-nav-footer">
+      <a href="index.html" target="_blank" class="nav-item"><i class="fas fa-store"></i> Otevřít e-shop</a>
+      <button class="nav-item" onclick="Security.logout()"><i class="fas fa-sign-out-alt"></i> Odhlásit</button>
+    </div>
+  </nav>
+
+  <main class="admin-content">
+    <!-- DASHBOARD -->
+    <section id="s-dashboard" class="admin-section">
+      <h1>Dashboard</h1>
+      <div class="stats-grid" id="dashStats"><!-- JS --></div>
+      <div class="dash-row">
+        <div class="dash-card">
+          <h3>Poslední objednávky</h3>
+          <div id="recentOrders"></div>
+        </div>
+        <div class="dash-card">
+          <h3>Nízké zásoby</h3>
+          <div id="lowStock"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="s-orders" class="admin-section" style="display:none">
+      <div class="section-header-row">
+        <h1>Objednávky</h1>
+        <div class="filter-bar">
+          <input type="text" id="orderSearch" placeholder="Hledat dle č. objednávky, jména…"/>
+          <select id="orderStatusFilter">
+            <option value="">Všechny stavy</option>
+            <option value="nova">Nová</option>
+            <option value="zpracovava">Zpracovává se</option>
+            <option value="odeslana">Odesláno</option>
+            <option value="dokoncena">Dokončeno</option>
+            <option value="zrusena">Zrušeno</option>
+          </select>
+        </div>
+      </div>
+      <div class="orders-table-wrap">
+        <table class="admin-table" id="ordersTable">
+          <thead><tr><th>Č. obj.</th><th>Datum</th><th>Zákazník</th><th>Celkem</th><th>Doprava</th><th>Stav</th><th>Akce</th></tr></thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="ordersEmpty" style="display:none">
+        <i class="fas fa-inbox"></i>
+        <p>Zatím žádné objednávky</p>
+      </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section id="s-inventory" class="admin-section" style="display:none">
+      <div class="section-header-row">
+        <h1>Správa skladu</h1>
+        <div class="filter-bar">
+          <input type="text" id="invSearch" placeholder="Hledat produkt…" oninput="renderInventory()"/>
+          <select id="invCatFilter" onchange="renderInventory()">
+            <option value="">Všechny kategorie</option>
+          </select>
+        </div>
+      </div>
+      <table class="admin-table inv-table" id="invTable">
+        <thead><tr><th>Produkt</th><th>Kategorie</th><th>Cena</th><th>Počet skladem</th><th>Stav</th><th>Upravit</th></tr></thead>
+        <tbody id="invBody"></tbody>
+      </table>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="s-products" class="admin-section" style="display:none">
+      <div class="section-header-row">
+        <h1>Produkty</h1>
+      </div>
+      <table class="admin-table" id="productsTable">
+        <thead><tr><th>ID</th><th>Název</th><th>Značka</th><th>Kategorie</th><th>Cena</th><th>Sklad</th><th>Prodeje</th></tr></thead>
+        <tbody id="productsBody"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalOrderTitle">Detail objednávky</h3>
+      <button onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalOrderBody"></div>
+  </div>
+</div>
+
+<!-- STOCK EDIT MODAL -->
+<div class="modal-overlay" id="stockModal" style="display:none">
+  <div class="modal-box modal-small">
+    <div class="modal-header">
+      <h3>Upravit skladové zásoby</h3>
+      <button onclick="closeStockModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <p id="stockModalName" class="stock-prod-name"></p>
+      <div class="stock-edit-form">
+        <div class="input-group">
+          <label>Počet kusů na skladě</label>
+          <input type="number" id="stockEditQty" min="0" placeholder="0"/>
+        </div>
+        <div class="input-group">
+          <label>Stav dostupnosti</label>
+          <select id="stockEditStatus">
+            <option value="skladem">✅ Skladem</option>
+            <option value="brzy-dorazi">🕒 Brzy dorazí</option>
+            <option value="neni-skladem">❌ Není skladem</option>
+          </select>
+        </div>
+        <div class="stock-quick-btns">
+          <button onclick="adjustStock(-1)" class="btn-ghost-sm"><i class="fas fa-minus"></i> -1</button>
+          <button onclick="adjustStock(1)" class="btn-ghost-sm"><i class="fas fa-plus"></i> +1</button>
+          <button onclick="adjustStock(-10)" class="btn-ghost-sm red">Vyskladnit 10</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button onclick="closeStockModal()" class="btn-ghost">Zrušit</button>
+      <button onclick="saveStockEdit()" class="btn-primary">Uložit</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="js/db.js"></script>
+<script>// ═══════════════════════════════════════════════════════════
+// NARKY E-SHOP — DATABASE (localStorage simulation)
+// V produkci nahradit backendem (Node.js/PHP + MySQL)
+// ═══════════════════════════════════════════════════════════
+
+// Database loaded from js/db.js
+
+/* ═══════════════════════════════════════════════════════════
+   NARKY E-SHOP — ADMIN.JS
+   ═══════════════════════════════════════════════════════════ */
+
+let currentEditId = null;
+
+const Security = {
+  HASH: '811fe3289e92561f7a642857867054cc051a4536b088d7c6fbc07629a0b7608c',
+  MAX_ATTEMPTS: 5,
+  LOCKOUT_TIME: 15 * 60 * 1000,
+  SESSION_DURATION: 30 * 60 * 1000,
+  idleTimer: null,
+
+  init() {
+    this.checkSession();
+    ['click', 'keydown', 'scroll', 'mousemove'].forEach(evt => {
+      document.addEventListener(evt, () => this.resetIdleTimer(), { passive: true });
+    });
+  },
+
+  async hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  },
+
+  getAttempts() {
+    try { return JSON.parse(localStorage.getItem('admin_attempts') || '{"count":0,"lockedUntil":0}'); }
+    catch { return { count: 0, lockedUntil: 0 }; }
+  },
+
+  setAttempts(attempts) {
+    localStorage.setItem('admin_attempts', JSON.stringify(attempts));
+  },
+
+  isLocked() {
+    return Date.now() < Number(this.getAttempts().lockedUntil || 0);
+  },
+
+  async checkLogin() {
+    if (this.isLocked()) {
+      const remaining = Math.ceil((this.getAttempts().lockedUntil - Date.now()) / 60000);
+      this.showError(`Účet je dočasně uzamčen. Zkuste to za ${remaining} min.`);
+      return;
+    }
+
+    const passInput = document.getElementById('adminPass');
+    const hashed = await this.hashPassword(passInput.value);
+
+    if (hashed === this.HASH) {
+      sessionStorage.setItem('admin_token', this.generateToken());
+      sessionStorage.setItem('admin_login_time', String(Date.now()));
+      this.setAttempts({ count: 0, lockedUntil: 0 });
+      this.audit('login');
+      this.showPanel();
+      return;
+    }
+
+    const attempts = this.getAttempts();
+    attempts.count = Number(attempts.count || 0) + 1;
+    if (attempts.count >= this.MAX_ATTEMPTS) {
+      attempts.lockedUntil = Date.now() + this.LOCKOUT_TIME;
+      this.showError('Příliš mnoho pokusů. Přístup je uzamčen na 15 minut.');
+      this.audit('lockout');
+    } else {
+      this.showError(`Nesprávné heslo. Zbývá ${this.MAX_ATTEMPTS - attempts.count} pokusů.`);
+    }
+    this.setAttempts(attempts);
+    passInput.focus();
+  },
+
+  generateToken() {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+  },
+
+  checkSession() {
+    const token = sessionStorage.getItem('admin_token');
+    const loginTime = Number(sessionStorage.getItem('admin_login_time') || 0);
+    if (token && Date.now() - loginTime < this.SESSION_DURATION) this.showPanel();
+    else this.logout(false);
+  },
+
+  showPanel() {
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'flex';
+    document.getElementById('loginErr').textContent = '';
+    DB.getProducts();
+    renderDashboard();
+    this.resetIdleTimer();
+  },
+
+  logout(writeAudit = true) {
+    if (writeAudit) this.audit('logout');
+    sessionStorage.removeItem('admin_token');
+    sessionStorage.removeItem('admin_login_time');
+    clearTimeout(this.idleTimer);
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('adminLogin').style.display = 'flex';
+    const passInput = document.getElementById('adminPass');
+    if (passInput) passInput.value = '';
+  },
+
+  resetIdleTimer() {
+    if (!sessionStorage.getItem('admin_token')) return;
+    clearTimeout(this.idleTimer);
+    this.idleTimer = setTimeout(() => this.logout(), this.SESSION_DURATION);
+  },
+
+  showError(message) {
+    document.getElementById('loginErr').textContent = message;
+  },
+
+  audit(action, detail = '') {
+    try {
+      const log = JSON.parse(localStorage.getItem('admin_audit_log') || '[]');
+      log.unshift({ action, detail, at: new Date().toISOString() });
+      localStorage.setItem('admin_audit_log', JSON.stringify(log.slice(0, 100)));
+    } catch {}
+  },
+};
+
+function showSection(id) {
+  document.querySelectorAll('.admin-section').forEach(s => s.style.display='none');
+  document.getElementById('s-'+id).style.display='block';
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if (id==='orders') renderOrders();
+  if (id==='inventory') renderInventory();
+  if (id==='products') renderProducts();
+  if (id==='dashboard') renderDashboard();
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────
+function renderDashboard() {
+  const orders = DB.getOrders();
+  const totalRevenue = orders.filter(o=>o.status!=='zrusena').reduce((s,o)=>s+o.total,0);
+  const newOrders = orders.filter(o=>o.status==='nova').length;
+  const products = DB.getProducts();
+  const lowStockProds = products.filter(p=>p.stock<=2 && p.stock>0);
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat-card"><div class="stat-card-label">Celkové tržby</div><div class="stat-card-value highlight">${totalRevenue.toLocaleString('cs-CZ')} Kč</div></div>
+    <div class="stat-card"><div class="stat-card-label">Objednávky</div><div class="stat-card-value">${orders.length}</div></div>
+    <div class="stat-card"><div class="stat-card-label">Nové objednávky</div><div class="stat-card-value highlight">${newOrders}</div></div>
+    <div class="stat-card"><div class="stat-card-label">Produkty</div><div class="stat-card-value">${products.length}</div></div>`;
+
+  const newBadge = document.getElementById('newOrdersBadge');
+  if (newOrders > 0) { newBadge.textContent = newOrders; newBadge.style.display='inline'; }
+
+  // Recent orders
+  const recent = orders.slice(0,5);
+  document.getElementById('recentOrders').innerHTML = recent.length ? recent.map(o=>`
+    <div class="dash-order-row">
+      <span class="dash-order-id">${o.id}</span>
+      <span>${o.address?.name||'—'}</span>
+      <span>${statusBadge(o.status)}</span>
+      <span class="dash-order-price">${o.total.toLocaleString('cs-CZ')} Kč</span>
+    </div>`).join('') : '<p style="color:#5a6580;font-size:.85rem">Zatím žádné objednávky</p>';
+
+  // Low stock
+  document.getElementById('lowStock').innerHTML = lowStockProds.length ? lowStockProds.map(p=>`
+    <div class="low-stock-row">
+      <span class="low-stock-name">${p.name}</span>
+      <span class="low-stock-qty ${p.stock<=1?'danger':'warn'}">${p.stock} ks</span>
+    </div>`).join('') : '<p style="color:#5a6580;font-size:.85rem">Všechny zásoby jsou dostatečné</p>';
+}
+
+// ── ORDERS ─────────────────────────────────────────────────
+function renderOrders() {
+  const orders = DB.getOrders();
+  const q = document.getElementById('orderSearch')?.value?.toLowerCase()||'';
+  const st = document.getElementById('orderStatusFilter')?.value||'';
+  let filtered = orders;
+  if (q) filtered = filtered.filter(o => o.id.toLowerCase().includes(q) || (o.address?.name||'').toLowerCase().includes(q));
+  if (st) filtered = filtered.filter(o => o.status===st);
+
+  const body = document.getElementById('ordersBody');
+  const empty = document.getElementById('ordersEmpty');
+  if (!body) return;
+
+  if (filtered.length===0) { body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = filtered.map(o=>`
+    <tr>
+      <td style="font-weight:700;color:#f0f2f8">${o.id}</td>
+      <td>${new Date(o.date).toLocaleDateString('cs-CZ')}</td>
+      <td style="color:#f0f2f8">${o.address?.name||'—'}<br><small style="color:#5a6580">${o.address?.email||''}</small></td>
+      <td style="color:var(--primary);font-weight:800;font-family:var(--font-head)">${o.total.toLocaleString('cs-CZ')} Kč</td>
+      <td style="color:#7a88a8;font-size:.82rem">${o.shipping?.name||'—'}</td>
+      <td>
+        <select class="status-select" onchange="updateOrderStatus('${o.id}',this.value)">
+          ${['nova','zpracovava','odeslana','dokoncena','zrusena'].map(s=>`<option value="${s}"${o.status===s?' selected':''}>${{nova:'Nová',zpracovava:'Zpracovává se',odeslana:'Odesláno',dokoncena:'Dokončeno',zrusena:'Zrušeno'}[s]}</option>`).join('')}
+        </select>
+      </td>
+      <td><button class="table-action-btn btn-view" onclick="viewOrder('${o.id}')"><i class="fas fa-eye"></i> Detail</button></td>
+    </tr>`).join('');
+
+  document.getElementById('orderSearch')?.addEventListener('input', renderOrders);
+  document.getElementById('orderStatusFilter')?.addEventListener('change', renderOrders);
+}
+
+function updateOrderStatus(id, status) {
+  const orders = DB.getOrders();
+  const o = orders.find(x=>x.id===id);
+  if (o) { o.status=status; DB.saveOrders(orders); Security.audit('order_status', `${id}: ${status}`); }
+}
+
+function statusBadge(s) {
+  const map = { nova:'Nová',zpracovava:'Zpracovává se',odeslana:'Odesláno',dokoncena:'Dokončeno',zrusena:'Zrušeno' };
+  return `<span class="status-badge status-${s}">${map[s]||s}</span>`;
+}
+
+window.viewOrder = function(id) {
+  const orders = DB.getOrders();
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  const a = o.address;
+  document.getElementById('modalOrderTitle').textContent = `Objednávka ${o.id}`;
+  document.getElementById('modalOrderBody').innerHTML = `
+    <div class="order-detail-grid">
+      <div class="od-section">
+        <h4>Zákazník</h4>
+        <p><strong>${a?.name}</strong></p>
+        <p>${a?.street}, ${a?.zip} ${a?.city}</p>
+        <p>Tel: ${a?.phone}</p>
+        <p>E-mail: ${a?.email}</p>
+        ${a?.note?`<p>Poznámka: ${a.note}</p>`:''}
+      </div>
+      <div class="od-section">
+        <h4>Objednávka</h4>
+        <p>Datum: <strong>${new Date(o.date).toLocaleString('cs-CZ')}</strong></p>
+        <p>Doprava: <strong>${o.shipping?.name}</strong></p>
+        ${o.shipping?.pickupPoint?`<p>Výdejní místo: <strong>${o.shipping.pickupPoint}</strong></p>`:''}
+        <p>Platba: <strong>${{card:'Karta',transfer:'Převod',cash:'Hotovost'}[o.payment] || o.payment}</strong></p>
+        <p>Stav: ${statusBadge(o.status)}</p>
+      </div>
+    </div>
+    <h4 style="font-size:.8rem;color:#5a6580;text-transform:uppercase;margin-bottom:10px">Produkty</h4>
+    <ul class="od-items">${o.items.map(i=>`<li><span>${i.name} ×${i.qty}</span><span>${(i.price*i.qty).toLocaleString('cs-CZ')} Kč</span></li>`).join('')}</ul>
+    <div style="margin-top:12px">
+      <div class="od-total-row"><span>Mezisoučet</span><span>${o.subtotal.toLocaleString('cs-CZ')} Kč</span></div>
+      <div class="od-total-row"><span>Doprava</span><span>${(o.shipping?.price||0).toLocaleString('cs-CZ')} Kč</span></div>
+      <div class="od-total-row main"><span>Celkem</span><span>${o.total.toLocaleString('cs-CZ')} Kč</span></div>
+    </div>`;
+  document.getElementById('orderModal').style.display='flex';
+};
+
+window.closeModal = function() { document.getElementById('orderModal').style.display='none'; };
+
+// ── INVENTORY ──────────────────────────────────────────────
+function renderInventory() {
+  const q = (document.getElementById('invSearch')?.value||'').toLowerCase();
+  const cat = document.getElementById('invCatFilter')?.value||'';
+  const products = DB.getProducts().filter(p => {
+    if (q && !p.name.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q)) return false;
+    if (cat && p.category !== cat) return false;
+    return true;
+  });
+
+  // Populate category filter
+  const catSel = document.getElementById('invCatFilter');
+  if (catSel && catSel.children.length === 1) {
+    DB.categories.forEach(c => { const o = document.createElement('option'); o.value=c.id; o.textContent=c.name; catSel.appendChild(o); });
+  }
+
+  document.getElementById('invBody').innerHTML = products.map(p=>`
+    <tr>
+      <td><div class="inv-name">${p.name}</div><div class="inv-cat">${p.brand}</div></td>
+      <td style="color:#7a88a8;font-size:.82rem">${DB.categories.find(c=>c.id===p.category)?.name||p.category}</td>
+      <td style="font-family:var(--font-head);font-weight:800;color:var(--primary)">${p.price.toLocaleString('cs-CZ')} Kč</td>
+      <td><span style="font-size:1rem;font-weight:800;color:${p.stock===0?'#e55':p.stock<=2?'#e89020':'#f0f2f8'}">${p.stock} ks</span></td>
+      <td>${stockStatusBadgeAdmin(p.stockStatus)}</td>
+      <td><button class="btn-edit-stock" onclick="openStockModal(${p.id})"><i class="fas fa-edit"></i> Upravit</button></td>
+    </tr>`).join('');
+}
+
+function stockStatusBadgeAdmin(s) {
+  const map = { 'skladem':'✅ Skladem','brzy-dorazi':'🕒 Brzy dorazí','neni-skladem':'❌ Není skladem' };
+  const colors = { 'skladem':'#4fa87a','brzy-dorazi':'#e89020','neni-skladem':'#e55' };
+  return `<span style="color:${colors[s]||'#a0abbe'};font-weight:700;font-size:.85rem">${map[s]||s}</span>`;
+}
+
+window.openStockModal = function(id) {
+  currentEditId = id;
+  const p = DB.products.find(x=>x.id===id);
+  if (!p) return;
+  document.getElementById('stockModalName').textContent = p.name;
+  document.getElementById('stockEditQty').value = p.stock;
+  document.getElementById('stockEditStatus').value = p.stockStatus;
+  document.getElementById('stockModal').style.display='flex';
+};
+
+window.adjustStock = function(delta) {
+  const inp = document.getElementById('stockEditQty');
+  inp.value = Math.max(0, parseInt(inp.value||0) + delta);
+};
+
+window.saveStockEdit = function() {
+  const qty = parseInt(document.getElementById('stockEditQty').value)||0;
+  const status = document.getElementById('stockEditStatus').value;
+  DB.updateProduct(currentEditId, { stock: qty, stockStatus: status });
+  Security.audit('stock_update', `product ${currentEditId}: ${qty} ks, ${status}`);
+  closeStockModal();
+  renderInventory();
+  renderDashboard();
+};
+
+window.closeStockModal = function() { document.getElementById('stockModal').style.display='none'; currentEditId=null; };
+
+// ── PRODUCTS TABLE ─────────────────────────────────────────
+function renderProducts() {
+  const products = DB.getProducts();
+  document.getElementById('productsBody').innerHTML = products.map(p=>`
+    <tr>
+      <td style="color:#5a6580">${p.id}</td>
+      <td style="color:#f0f2f8;font-weight:600">${p.name}</td>
+      <td style="color:#a0abbe">${p.brand}</td>
+      <td style="color:#7a88a8;font-size:.82rem">${DB.categories.find(c=>c.id===p.category)?.name||p.category}</td>
+      <td style="font-family:var(--font-head);font-weight:800;color:var(--primary)">${p.price.toLocaleString('cs-CZ')} Kč</td>
+      <td style="font-weight:800;color:${p.stock===0?'#e55':p.stock<=2?'#e89020':'#f0f2f8'}">${p.stock} ks</td>
+      <td style="color:#7a88a8">${p.sales}×</td>
+    </tr>`).join('');
+}
+
+// keyboard
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') { closeModal(); closeStockModal(); }
+});
+
+document.addEventListener('DOMContentLoaded', () => Security.init());
+</script>
+<script src="js/narky-ui.js"></script>
+<script src="js/narky-business.js"></script>
+</body>
+</html>
